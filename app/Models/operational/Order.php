@@ -31,4 +31,11 @@ class Order extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    public function user()
+    {
+        // parameter belongs to ada 3
+        // 3 parameter (path model yang di tuju), FK nya, primart key(id)
+        return $this->belongsTo('App\Models\User', 'concert_id', 'id');
+    }
 }

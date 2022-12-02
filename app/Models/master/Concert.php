@@ -25,9 +25,17 @@ class Concert extends Model
    protected $fillable = [
        'title',
        'price',
+       'date',
        // date kita declare filable karena di isi lagi oleh user. di atas kita hanya set input nya wajib type date
        'created_at',
        'updated_at',
        'deleted_at',
    ];
+
+    // bikin function table yang di tuju
+    public function concert()
+    {
+        // 2 parameter (path model yang di tuju), FK nya
+        return $this->hasMany('App\Models\operational\Order', 'concert_id');
+    }
 }

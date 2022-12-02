@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\adminController;
+use App\Http\Controllers\checkinController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,16 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('/', OrderController::class);
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+// midleware
+Route::group(['middleware'=> ['auth:sanctum', 'verified']], function (){
+
+
+    Route::resource('admin', adminController::class);
+
+  
+
+    Route::resource('checkin', checkinController::class);
+
 });

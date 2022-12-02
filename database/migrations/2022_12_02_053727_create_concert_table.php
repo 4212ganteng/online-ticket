@@ -17,7 +17,6 @@ class CreateConcertTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('price');
-            $table->time('time');
             $table->date('date');
             $table->timestamps();
             $table->softDeletes();
