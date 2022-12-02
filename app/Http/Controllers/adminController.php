@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\order\StoreorderRequest;
+use App\Models\operational\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class adminController extends Controller
 {
@@ -20,7 +23,10 @@ class adminController extends Controller
      */
     public function index()
     {
-        //
+        $concert = Order::orderBy('title','asc')->get();
+
+        // dd($concert);
+        return view('pages.admin.index', compact('concert'));
     }
 
     /**
@@ -30,7 +36,7 @@ class adminController extends Controller
      */
     public function create()
     {
-        //
+       return abort(404);
     }
 
     /**
@@ -39,9 +45,14 @@ class adminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreorderRequest $request)
     {
-        //
+         $data = $request->all();
+
+        // store data
+        $order = Order::create($data);
+
+        return Redirect::route('');
     }
 
     /**

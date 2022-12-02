@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\order\StoreorderRequest;
+use App\Http\Requests\order\UpdateorderRequest;
 use App\Models\master\Concert;
 use App\Models\operational\Order;
 use Illuminate\Http\Request;
@@ -17,10 +18,10 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $concert = Concert::orderBy('title','asc')->get();
+        $concert = Order::orderBy('title','asc')->get();
 
         // dd($concert);
-        return view('pages.order.index', compact('concert'));
+        return view('pages.order.index', compact('order'));
     }
 
     /**
@@ -30,7 +31,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -46,7 +47,7 @@ class OrderController extends Controller
         // store data
         $order = Order::create($data);
 
-        return Redirect::route('pages.order.create');
+        return Redirect::route('');
     }
 
     /**
@@ -55,9 +56,10 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Order $order)
     {
-        //
+        return view('pages.admin.show', compact('order')); 
+        
     }
 
     /**
@@ -68,7 +70,8 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('pages.admin.edit', compact('order')); 
+        
     }
 
     /**
@@ -78,9 +81,17 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateorderRequest $request, $order)
     {
-        //
+        // crete variabel Penampung for get all request
+        $data = $request->all();
+
+        // update to DB
+        $order->update($data);
+
+
+      //    redirect to index specialist
+      Redirect()->route('admin.index');
     }
 
     /**
@@ -89,8 +100,10 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Order $order)
     {
-        //
+        $order->delete();
+
+        return back();
     }
 }
